@@ -6,12 +6,12 @@
 		<link rel="stylesheet" type="text/css" href="css/reset.css">
 
 		<script type="text/template" id="availableclassview">
-			<div style='background-color:lightblue;'>
+			<div style='padding-top:2px;border:.5px solid black'>
 			    <div>
 			            <div style='display:inline-block;float:left;'><%=obj.name%></div>
 			            <div style='display:inline-block;float:right;'><%=obj.start_time%> - <%=obj.end_time%> </div>
 			    </div><br>    
-			    <div>
+			    <div style="padding-top:5px">
 			    	<div style='display:inline-block;float:left;'><%=obj.subject%> <%=obj.course_number%></div>
 			        <div style='display:inline-block;float:right;'><%=obj.days%></div>
 			    </div><br>
@@ -20,13 +20,28 @@
 		</script>
 
 		<script type="text/template" id="availableclassviewholder">
-			<div style="text-align:center;">Add Classes</div>
-			<div class="filters">
+			<div style="text-align:center;background-color:grey">Add Classes</div>
+			<div style="background-color:grey;"class="filters">
 				<div style="display:inline-block;">Name: <input style="float:right;" id="name_filter"></div>
 				<div style="display:inline-block;">Subject: <input style="float:right;"id="subject_filter"></div>
 				<div style="display:inline-block;">Course Number: <input style="float:right;" id="course_number_filter"></div>
 			</div>
-			<div id="collection_holder"></div>
+			<div style="background-color:white" id="collection_holder"></div>
+		</script>
+
+		<script type="text/template" id="scheduledclassview">
+			<div style='border:.5px solid black;padding-bottom:2px'>
+			    <div>
+			            <div style='display:inline-block;float:left;'><%=obj.name%></div>
+			            <div style='display:inline-block;float:right;'><%=obj.start_time%> - <%=obj.end_time%> </div>
+			    </div><br><br>   
+			<% if (obj.subject) { %>
+			    <div>
+			    	<div style='display:inline-block;float:left;'><%=obj.subject%> <%=obj.course_number%></div>
+			    </div><br>
+			<% } %>	
+			</div>
+
 		</script>
 
 		<script src = "https://code.jquery.com/jquery-2.1.3.min.js"
@@ -43,52 +58,139 @@
 				height:10%;
 				width:100%;
 			}
+
+			.popup {
+				margin:auto;
+				position:fixed;
+				height:40%;
+				width:40%;
+				background-color:white;
+			  	top: 50%;
+			  	left: 50%;
+			  	transform: translate(-50%, -50%);			
+			}
+
+			.error-popup {
+				margin:auto;
+				position:fixed;
+				height:20%;
+				width:40%;
+				background-color:white;
+			  	top: 2%;
+			  	left: 95%;
+			  	transform: translate(-50%, -2%);	
+			  	background-color:#ffa3a3;		
+			}
+
+			.invisible {
+				display:none;
+			}
+
+			#add-class {
+				width:25%;
+				text-align:center;
+				margin:0 auto;
+			}
+
+			.acvh {
+				height:100%;
+				overflow:auto
+			}
+			.nevermind {
+				width:10%;
+				text-align:right;
+				float:right;
+				font-size:2rem;
+			}
 		</style>
 	</head>
-	<body style="margin:0px 0px 0px 0px;height:775px;width:100%;background-color:grey;">
-			<div style="display:inline-block;width:26%;height:100%; border: 3px solid black;">
-				<div style ="background-color:grey;height:50%; border-bottom:3px solid black">
-					<h3 style="text-align:center">Add Your Own Event</h3>
-					<div class="row">
-						<div style="display:inline;"class="input_label">Name</div>
-						<input value="a" id="event_name">
-					</div>
-					<div class="row">
-						<div class="input_label">Start Time<input id="start_time" type="time" value="06:05" style="border-radius:7px">
-						</div>
-					</div>
-					<div class="row">
-						<div class="input_label"style="text-align:left;">End Time<input value="07:05" id="end_time" type="time">
-						</div>
-					</div>
-					<div>
-						<div>Day<br></div>
-						<div id="days" style="text-align:center;display:inline-block;">
-							<input type="checkbox" name="days" value="monday">M</input>
-							<input type="checkbox" name="days" value="tuesday">T</input>
-							<input type="checkbox" name="days" value="wednesday">W</input>
-							<input type="checkbox" name="days" value="thursday">TH</input>
-							<input type="checkbox" name="days" value="friday">F</input>
-						</div>
-					</div>
-					<br>
-					<div id="add_my_event" style="display:inline-block;text-align:center;vertical-align:middle;width:100%;height:8%;background-color:white;">Add to Schedule</div>
-				</div>
-				<div style="background-color:white;height:50%">
-					<div class="acvh"></div>
+	<body style="margin:0px 0px 0px 0px;height:775px;width:100%;background-color:grey;font-family:verdana;font-size:.9rem">
+		<div class="add-popup popup invisible">
+			<div style="height:10%;text-align:right;background-color:#d6d6d6">
+				<div class="add-nevermind">&#10006;</div>
+			</div>
+			<div style="background-color:#f7f7f7;height:85%;margin:auto">
+				<div>Are you sure you want to add this class to your schedule?
 				</div>
 			</div>
-			<div style="display:inline-block;width:72%;height:100%;float:right">
-				<h3 style="height:20px;text-align:center;">MySchedule</h3>
-				<div style="background-color:grey;height:100%;margin:0px 0px 0px 0px;text-align:center;">
-					<ul style="padding:0;height:90%;width:100%;margin:auto;">
-						<li class="inner">
-						<li class="inner">
-						<li class="inner">
-						<li class="inner">
-						<li class="inner">
-					</ul>
+			<div style="height:15%;background-color:#f7f7f7;text-align:center;">
+				<div id="add-class">Add Class</div>
+			</div>
+		</div>
+		<div class="remove-popup popup invisible">
+			<div style="height:10%;text-align:right;background-color:#d6d6d6">
+				<div class="remove-nevermind">&#10006;</div>
+			</div>
+			<div style="background-color:#f7f7f7;height:85%;margin:auto">
+				<div>Are you sure you want to remove this class from your schedule?
 				</div>
 			</div>
+			<div style="height:15%;background-color:#f7f7f7;text-align:center;">
+				<div id="remove-class">Remove Class</div>
+			</div>
+		</div>
+		<div class="error-popup invisible">
+			<p>You cannot add this class</p>
+			
+		</div>
+		<div style="display:inline-block;width:26%;height:100%; border: 3px solid black;">
+			<div style ="background-color:grey;height:30%; border-bottom:3px solid black">
+				<h3 style="text-align:center">Add Your Own Event</h3>
+				<div class="row">
+					<div style="display:inline;"class="input_label">Name</div>
+					<input value="a" id="event_name">
+				</div>
+				<div class="row">
+					<div class="input_label">Start Time<input id="start_time" type="time" value="06:05" style="border-radius:7px">
+					</div>
+				</div>
+				<div class="row">
+					<div class="input_label"style="text-align:left;">End Time<input value="07:05" id="end_time" type="time">
+					</div>
+				</div>
+				<div>
+					<div>Day<br></div>
+					<div id="days" style="text-align:center;display:inline-block;">
+						<input type="checkbox" name="days" value="monday">M</input>
+						<input type="checkbox" name="days" value="tuesday">T</input>
+						<input type="checkbox" name="days" value="wednesday">W</input>
+						<input type="checkbox" name="days" value="thursday">TH</input>
+						<input type="checkbox" name="days" value="friday">F</input>
+					</div>
+				</div>
+				<br>
+				<div id="add_my_event" style="display:inline-block;text-align:center;vertical-align:middle;width:100%;height:8%;background-color:white;">Add to Schedule</div>
+			</div>
+			<div style="background-color:white;height:70%;border:1px solid black;border-bottom:2px solid black">
+				<div class="acvh"></div>
+			</div>
+		</div>
+		<div style="display:inline-block;width:72%;height:100%;float:right">
+			<h3 style="height:37px;text-align:center;font-size:1.75rem">MySchedule</h3>
+			<div style="background-color:grey;height:100%;margin:0px 0px 0px 0px;text-align:center;">
+				<ul style="padding:0;height:90%;width:100%;margin:auto;display:inline-block">
+					<li class="inner">
+						<div>Monday</div>
+						<div class="monday"></div>
+					</li>
+					<li class="inner">
+						<div>Tuesday</div>
+						<div class="tuesday"></div>
+					</li>
+					<li class="inner">
+						<div>Wednesday</div>
+						<div class="wednesday"></div>
+					</li>
+					<li class="inner">
+						<div>Thursday</div>
+						<div class="thursday"></div>
+					</li>
+					<li class="inner">
+						<div>Friday</div>
+						<div class="friday"></div>
+					</li>
+				</ul>
+			</div>
+		</div>
 	</body>
 </html>

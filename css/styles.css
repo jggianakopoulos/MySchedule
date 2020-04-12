@@ -3,10 +3,10 @@
 	border:1px solid black;
 	background-color:#dee0df;
 	display:inline-block;
-	text-align:center;
-	height:90%;
-	padding:0px 0px 0px 0px;
+/*	height:90%;
+*/	padding:0px 0px 0px 0px;
 	margin:0px 0px 0px 0px;
+	vertical-align:top;
 };
 
 .nopadding {
