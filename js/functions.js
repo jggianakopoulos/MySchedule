@@ -3,7 +3,7 @@ $( document ).ready(function() {
 
 	var redrawMonday = function() {
 		$(".monday").html("");
-		_.each(window.MondayClassCollection.models, function (model) {
+		_.each(window.MondayClassCollection.sort().models, function (model) {
 			var adding = new ScheduledClassView({
 				model : model
 			});
@@ -68,7 +68,11 @@ $( document ).ready(function() {
 
 		if(name != "" && start_time != "" && end_time != "" && days != "") {
 			if (start_time >= end_time) {
-				console.log("Start time is greater than end time");
+				$("#error-popup-text").html("The end time cannot be before the start time.");
+				$(".error-popup").removeClass("invisible");
+				setTimeout(function() {
+					$(".error-popup").addClass("invisible"); 
+				}, 2000);
 			} else {
 				var overlap = false;
 				var add = true;
@@ -94,35 +98,63 @@ $( document ).ready(function() {
 				}
 
 				if (add) {
+					var start_number = parseInt(start_time.substring(0,2));
+					var end_number = parseInt(end_time.substring(0,2));
+
+					if (start_number > 12) {
+						start_number = start_number - 12;
+					} else if(start_number == 0) {
+						start_number = 12;
+					}
+
+					var tod = "am";
+					if (end_number > 12) {
+						end_number = end_number - 12;
+						tod = "pm";
+					} else if(end_number == 0) {
+						end_number = 12;
+					}
+
+					view_start_time = start_number.toString() + start_time.substring(2,5);
+					view_end_time = end_number.toString() + end_time.substring(2,5) + tod;
+
+					new_model = new ClassModel({name: name,start_time:start_time,end_time:end_time,days:days,view_start_time:view_start_time,view_end_time:view_end_time});
 					if (days.includes("monday")) {
-						window.MondayClassCollection.add({name: name,start_time:start_time,end_time:end_time,days:days});
+						window.MondayClassCollection.add(new_model);
 						redrawMonday();
 					}
 					if (days.includes("tuesday")) {
-						window.TuesdayClassCollection.add({name: name,start_time:start_time,end_time:end_time,days:days});
+						window.TuesdayClassCollection.add(new_model);
 						redrawTuesday();
 					}
 					if (days.includes("wednesday")) {
-						window.WednesdayClassCollection.add({name: name,start_time:start_time,end_time:end_time,days:days});
+						window.WednesdayClassCollection.add(new_model);
 						redrawWednesday();
 					}
 					if (days.includes("thursday")) {
-						window.ThursdayClassCollection.add({name: name,start_time:start_time,end_time:end_time,days:days});
+						window.ThursdayClassCollection.add(new_model);
 						redrawThursday();
 					}
 					if (days.includes("friday")) {
-						window.FridayClassCollection.add({name: name,start_time:start_time,end_time:end_time,days:days});
+						window.FridayClassCollection.add(new_model);
 						redrawFriday();
 					}
-					window.ClassCollection.add({name: name,start_time:start_time,end_time:end_time,days:days});
+					window.ClassCollection.add(new_model);
 				} else {
+					$("#error-popup-text").html("This class doesn't fit in your schedule.");
 					$(".error-popup").removeClass("invisible");
 					setTimeout(function() {
 						$(".error-popup").addClass("invisible"); 
-					}, 1500);
+					}, 2000);
 				}
 			}
 
+		} else {
+			$("#error-popup-text").html("You must fill in every field.");
+			$(".error-popup").removeClass("invisible");
+			setTimeout(function() {
+				$(".error-popup").addClass("invisible"); 
+			}, 2000);
 		}
 	};
 

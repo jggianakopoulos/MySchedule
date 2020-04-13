@@ -3,13 +3,87 @@
 	border:1px solid black;
 	background-color:#dee0df;
 	display:inline-block;
-/*	height:90%;
-*/	padding:0px 0px 0px 0px;
+	padding:0px 0px 0px 0px;
 	margin:0px 0px 0px 0px;
 	vertical-align:top;
-};
+}
 
 .nopadding {
 	padding:0;
 	margin:0;
-};
+}
+
+.row {
+	padding:10px 0px 10px 2px;
+	width:100%;
+}
+
+.input-label {
+	margin-left:8px;
+}
+
+.input-box {
+	float:right;
+	border-radius: 5px;
+	margin-right:8px;
+}
+
+.popup {
+	margin:auto;
+	position:fixed;
+	width:500px;
+	background-color:white;
+  	top: 50%;
+  	left: 50%;
+  	transform: translate(-50%, -50%);	
+  	overflow:hidden;
+  	border-radius:10px;		
+}
+
+.error-popup {
+	margin:auto;
+	position:fixed;
+	width:17%;
+	padding:15px 10px;
+	background-color:white;
+  	top: 2%;
+  	left: 95%;
+  	transform: translate(-95%, -2%);	
+  	background-color:#ffa3a3;	
+  	text-align:center;	
+  	border-radius:10px;
+}
+
+.invisible {
+	display:none;
+}
+
+.add-remove-class {
+	width:25%;
+	text-align:center;
+	margin:0 auto;
+	background-color:#d6d6d6;
+	border-radius:20px;
+	padding:10px 0;
+}
+
+.acvh {
+	height:100%;
+	width:100%;
+	overflow:auto;
+	background-color: lightgrey;
+}
+.nevermind {
+	width:10%;
+	text-align:right;
+	float:right;
+	font-size:2rem;
+}
+h3 {
+	font-size:1.2rem;
+	padding:5px;
+}
+
+.popup-text {
+	padding: 70px 0;
+}

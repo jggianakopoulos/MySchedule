@@ -38,12 +38,18 @@ var AvailableClassView = Backbone.View.extend ({
 
 		if (popup) {
 			window.current_model = this.model;
+			if (this.model.get("prereq") && this.model.get("prereq") != "") {
+				$("#add-popup-text").html("WARNING: You cannot take " + this.model.get("name") + " if you have not taken the following classes: " + this.model.get("prereq") + ". Do you still wish to add the class to your schedule?");
+			} else {
+				$("#add-popup-text").html("Are you sure you want to add " + this.model.get("name") + " to your schedule?");
+			}
 			$(".add-popup").removeClass("invisible");
 		} else {
+			$("#error-popup-text").html("This class doesn't fit into your schedule.");
 			$(".error-popup").removeClass("invisible");
 			setTimeout(function() {
 				$(".error-popup").addClass("invisible"); 
-			}, 1500);
+			}, 2000);
 		}
 	}
 });
@@ -113,6 +119,7 @@ var ScheduledClassView = Backbone.View.extend ({
 	},
 	"askRemove" : function () {
 		window.remove_model = this.model;
+		$("#remove-popup-text").html("Are you sure you want to remove " + this.model.get("name") + " from your schedule?");
 		$(".remove-popup").removeClass("invisible");
 	}
 });
@@ -147,20 +154,35 @@ VisibleAvailableClassCollection = Backbone.Collection.extend({
 });
 
 MondayClassCollection = Backbone.Collection.extend({
-	model: ClassModel
+	model: ClassModel,
+	comparator: function (model) {
+		return model.get("start_time");
+	}
 });
 
 TuesdayClassCollection = Backbone.Collection.extend({
-	model: ClassModel
+	model: ClassModel,
+	comparator: function (model) {
+		return model.get("start_time");
+	}
 });
 WednesdayClassCollection = Backbone.Collection.extend({
-	model: ClassModel
+	model: ClassModel,
+	comparator: function (model) {
+		return model.get("start_time");
+	}
 });
 ThursdayClassCollection = Backbone.Collection.extend({
-	model: ClassModel
+	model: ClassModel,
+	comparator: function (model) {
+		return model.get("start_time");
+	}
 });
 FridayClassCollection = Backbone.Collection.extend({
-	model: ClassModel
+	model: ClassModel,
+	comparator: function (model) {
+		return model.get("start_time");
+	}
 });
 window.ClassCollection = new ClassCollection();
 window.AvailableClassCollection = new AvailableClassCollection();
@@ -171,26 +193,11 @@ window.ThursdayClassCollection = new ThursdayClassCollection();
 window.FridayClassCollection = new FridayClassCollection();
 
 
-window.AvailableClassCollection.add({name:"Class 1",start_time:"17:00",end_time:"19:00",days:"monday", subject:"APM",course_number:"1500"});
-window.AvailableClassCollection.add({name:"Class 2",start_time:"16:00",end_time:"19:00",days:"tuesday",subject:"PHY",course_number:"2400"});
-window.AvailableClassCollection.add({name:"Class 3",start_time:"15:00",end_time:"16:00",days:"monday",subject:"IS",course_number:"1600"});
-window.AvailableClassCollection.add({name:"Class 4",start_time:"09:00",end_time:"11:47",days:"friday",subject:"CS",course_number:"3500"});
-window.AvailableClassCollection.add({name:"Class 1",start_time:"17:00",end_time:"19:00",days:"monday", subject:"APM",course_number:"1500"});
-window.AvailableClassCollection.add({name:"Class 2",start_time:"16:00",end_time:"19:00",days:"tuesday",subject:"PHY",course_number:"2400"});
-window.AvailableClassCollection.add({name:"Class 3",start_time:"15:00",end_time:"16:00",days:"monday",subject:"IS",course_number:"1600"});
-window.AvailableClassCollection.add({name:"Class 4",start_time:"09:00",end_time:"11:47",days:"friday",subject:"CS",course_number:"3500"});
-window.AvailableClassCollection.add({name:"Class 1",start_time:"17:00",end_time:"19:00",days:"monday", subject:"APM",course_number:"1500"});
-window.AvailableClassCollection.add({name:"Class 2",start_time:"16:00",end_time:"19:00",days:"tuesday",subject:"PHY",course_number:"2400"});
-window.AvailableClassCollection.add({name:"Class 3",start_time:"15:00",end_time:"16:00",days:"monday",subject:"IS",course_number:"1600"});
-window.AvailableClassCollection.add({name:"Class 4",start_time:"09:00",end_time:"11:47",days:"friday",subject:"CS",course_number:"3500"});
-window.AvailableClassCollection.add({name:"Class 1",start_time:"17:00",end_time:"19:00",days:"monday", subject:"APM",course_number:"1500"});
-window.AvailableClassCollection.add({name:"Class 2",start_time:"16:00",end_time:"19:00",days:"tuesday",subject:"PHY",course_number:"2400"});
-window.AvailableClassCollection.add({name:"Class 3",start_time:"15:00",end_time:"16:00",days:"monday",subject:"IS",course_number:"1600"});
-window.AvailableClassCollection.add({name:"Class 4",start_time:"09:00",end_time:"11:47",days:"friday",subject:"CS",course_number:"3500"});
-window.AvailableClassCollection.add({name:"Class 1",start_time:"17:00",end_time:"19:00",days:"monday", subject:"APM",course_number:"1500"});
-window.AvailableClassCollection.add({name:"Class 2",start_time:"16:00",end_time:"19:00",days:"tuesday",subject:"PHY",course_number:"2400"});
-window.AvailableClassCollection.add({name:"Class 3",start_time:"15:00",end_time:"16:00",days:"monday",subject:"IS",course_number:"1600"});
-window.AvailableClassCollection.add({name:"Class 4",start_time:"09:00",end_time:"11:47",days:"monday;friday",subject:"CS",course_number:"3500"});
+window.AvailableClassCollection.add({name:"Class 1",start_time:"17:00",end_time:"19:00",view_start_time:"5:00",view_end_time:"7:00pm",days:"monday,wednesday", subject:"APM",course_number:"2200",instructor:"Jon Jones",prereq:"APM1000"});
+window.AvailableClassCollection.add({name:"Class 2",start_time:"16:00",end_time:"19:00",view_start_time:"4:00",view_end_time:"7:00pm",days:"tuesday,thursday",subject:"PHY",course_number:"2400",instructor:"Kevin Brown"});
+window.AvailableClassCollection.add({name:"Class 3",start_time:"15:00",end_time:"16:00",view_start_time:"3:00",view_end_time:"4:00pm",days:"monday,wednesday,friday",subject:"IS",course_number:"1600",instructor:"Lee Card"});
+window.AvailableClassCollection.add({name:"Class 4",start_time:"09:00",end_time:"11:47",view_start_time:"9:00",view_end_time:"11:47am",days:"friday",subject:"CS",course_number:"3500",instructor:"Dave Smith",prereq:"CS3480, CS3300, CS2200"});
+
 
 
 
