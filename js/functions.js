@@ -64,7 +64,7 @@ $( document ).ready(function() {
 			if (days == "") {
 				days += $("input[name='days']:checked")[i].value;
 			} else {
-				days += ";" + $("input[name='days']:checked")[i].value;
+				days += "," + $("input[name='days']:checked")[i].value;
 			}
 		}
 
