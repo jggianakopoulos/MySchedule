@@ -1,9 +1,11 @@
 $( document ).ready(function() {
 	new AvailableClassViewHolder({el:$(".acvh")});
+	window.color_array = ['#a3c6ff', '#86f0a4', '#fa95b6', '#ffbe7d', '#e1a7ff', '#fffb9c', '#88efff', '#9eff60', '#ffc2ef'];
+	window.current_color = 0;
 
 	var redrawMonday = function() {
 		$(".monday").html("");
-		_.each(window.MondayClassCollection.sort().models, function (model) {
+		_.each(window.MondayClassCollection.models, function (model) {
 			var adding = new ScheduledClassView({
 				model : model
 			});
@@ -79,7 +81,7 @@ $( document ).ready(function() {
 
 				for(var i = 0; i < window.ClassCollection.length; i++) {
 					overlap = false;
-					var occupied_days = window.ClassCollection.at(i).get("days").split(";");
+					var occupied_days = window.ClassCollection.at(i).get("days").split(",");
 					for(var j = 0; j < occupied_days.length; j++) {
 						if (days.includes(occupied_days[j])) {
 							overlap = true;
@@ -118,7 +120,12 @@ $( document ).ready(function() {
 					view_start_time = start_number.toString() + start_time.substring(2,5);
 					view_end_time = end_number.toString() + end_time.substring(2,5) + tod;
 
-					new_model = new ClassModel({name: name,start_time:start_time,end_time:end_time,days:days,view_start_time:view_start_time,view_end_time:view_end_time});
+					new_model = new ClassModel({name: name,start_time:start_time,end_time:end_time,days:days,view_start_time:view_start_time,view_end_time:view_end_time,color:window.color_array[window.current_color]});
+					window.current_color++;
+					if (window.current_color > 8) {
+						window.current_color = 0;
+					}
+					if (current_color)
 					if (days.includes("monday")) {
 						window.MondayClassCollection.add(new_model);
 						redrawMonday();
@@ -160,7 +167,6 @@ $( document ).ready(function() {
 
 	var addClass = function() {
 		if (window.current_model) {
-			console.log("this is here");
 			window.ClassCollection.add(window.current_model);
 			if (current_model.get("days").includes("monday")) {
 				window.MondayClassCollection.add(window.current_model);
@@ -191,7 +197,6 @@ $( document ).ready(function() {
 
 	var removeClass = function() {
 		if (window.remove_model) {
-			console.log("this is here");
 			window.ClassCollection.remove(window.remove_model);
 			if (remove_model.get("days").includes("monday")) {
 				window.MondayClassCollection.remove(window.remove_model);
