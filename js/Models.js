@@ -213,7 +213,13 @@ window.AvailableClassCollection.add({name:"Information Security Practice",start_
 window.AvailableClassCollection.add({name:"Discrete Mathematics",start_time:"13:00",end_time:"14:47",view_start_time:"1:00",view_end_time:"2:47pm",days:"tuesday,thursday",subject:"APM",course_number:"2663",instructor:"Eddie Cheng",prereq:"MTH1555"});
 window.AvailableClassCollection.add({name:"Calculus 1",start_time:"9:20",end_time:"10:27",view_start_time:"9:20",view_end_time:"10:27am",days:"monday,wednesday,friday",subject:"MTH",course_number:"1554",instructor:"",prereq:"MTH1441 or MTH1331 or MTH1332"});
 window.AvailableClassCollection.add({name:"Calculus 2",start_time:"10:40",end_time:"11:47",view_start_time:"10:40",view_end_time:"11:47am",days:"monday,wednesday,friday",subject:"MTH",course_number:"1555",instructor:"Tamas Horvath",prereq:"MTH1554"});
-
+window.AvailableClassCollection.add({name:"Calculus 2",start_time:"10:40",end_time:"11:47",view_start_time:"10:40",view_end_time:"11:47am",days:"monday,wednesday,friday",subject:"MTH",course_number:"1555",instructor:"Tamas Horvath",prereq:"MTH1554"});
+window.AvailableClassCollection.add({name:"Elementary Algebra",start_time:"08:00",end_time:"09:35 ",view_start_time:"08:00am",view_end_time:"09:35 am",days:"Monday,Wednesday",subject:"MTH",course_number:"0661",instructor:"Jane Mullally",prereq:""});
+window.AvailableClassCollection.add({name:"Elementary Algebra",start_time:"09:45",end_time:"11:20",view_start_time:"09:45am",view_end_time:"11:20am",days:"Tuesday,Thursday",subject:"MTH",course_number:"0661",instructor:"Sherri Zimmerman",prereq:""});
+window.AvailableClassCollection.add({name:"Intermediate Algebra",start_time:"09:45",end_time:"11:20",view_start_time:"09:45am",view_end_time:"11:20am",days:"Monday,Wednesday",subject:"MTH",course_number:"0662",instructor:"Robert Connolly",prereq:"MTH0662"});
+window.AvailableClassCollection.add({name:"Intermediate Algebra",start_time:"09:00",end_time:"10:07",view_start_time:"09:00am",view_end_time:"10:07am",days:"Tuesday,Thursday",subject:"MTH",course_number:"0662",instructor:"Ervisa Zhamo",prereq:"MTH0662"});
+window.AvailableClassCollection.add({name:"Intermediate Algebra",start_time:"09:00",end_time:"10:07",view_start_time:"09:00am",view_end_time:"10:07am",days:"Monday,Tuesday,Thursday,Friday",subject:"MTH",course_number:"0662",instructor:"Thomas VanHouten",prereq:"MTH0662"});
+window.AvailableClassCollection.add({name:"Precalculus",start_time:"12:00",end_time:"13:35",view_start_time:"12:00pm",view_end_time:"01:35pm",days:"Monday,Tuesday,Wednesday,Thursday",subject:"MTH",course_number:"1441",instructor:"Robert Connolly",prereq:"MTH1441"});
 
 
 
