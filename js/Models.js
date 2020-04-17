@@ -50,6 +50,7 @@ var AvailableClassView = Backbone.View.extend ({
 			}
 			$(".add-popup").removeClass("invisible");
 		} else {
+			alert("This class doesn't fit into your schedule.");
 			$("#error-popup-text").html("This class doesn't fit into your schedule.");
 			$(".error-popup").removeClass("invisible");
 			setTimeout(function() {
