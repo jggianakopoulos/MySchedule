@@ -66,7 +66,7 @@ $( document ).ready(function() {
 			} else {
 				days += "," + $("input[name='days']:checked")[i].value;
 			}
-
+		}
 		if(name != "" && start_time != "" && end_time != "" && days != "") {
 			if (start_time >= end_time) {
 				alert("The end time cannot be before the start time.");
