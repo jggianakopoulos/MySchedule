@@ -69,7 +69,7 @@ $( document ).ready(function() {
 
 		if(name != "" && start_time != "" && end_time != "" && days != "") {
 			if (start_time >= end_time) {
-				alert("The end time cannot be before the start time.")
+				alert("The end time cannot be before the start time.");
 				$("#error-popup-text").html("The end time cannot be before the start time.");
 				$(".error-popup").removeClass("invisible");
 				setTimeout(function() {
