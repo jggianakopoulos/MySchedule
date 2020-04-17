@@ -66,10 +66,10 @@ $( document ).ready(function() {
 			} else {
 				days += "," + $("input[name='days']:checked")[i].value;
 			}
-		}
 
 		if(name != "" && start_time != "" && end_time != "" && days != "") {
 			if (start_time >= end_time) {
+				alert("The end time cannot be before the start time.")
 				$("#error-popup-text").html("The end time cannot be before the start time.");
 				$(".error-popup").removeClass("invisible");
 				setTimeout(function() {
@@ -148,6 +148,7 @@ $( document ).ready(function() {
 					}
 					window.ClassCollection.add(new_model);
 				} else {
+					alert("This class doesn't fit in your schedule.");
 					$("#error-popup-text").html("This class doesn't fit in your schedule.");
 					$(".error-popup").removeClass("invisible");
 					setTimeout(function() {
@@ -157,6 +158,7 @@ $( document ).ready(function() {
 			}
 
 		} else {
+			alert("You must fill in every field.");
 			$("#error-popup-text").html("You must fill in every field.");
 			$(".error-popup").removeClass("invisible");
 			setTimeout(function() {
